@@ -1,5 +1,5 @@
 const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     setIsSubmitting(true);
 
     // Temporary: Just show success message without API call
