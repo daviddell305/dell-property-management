@@ -1,4 +1,3 @@
-// Vercel serverless function for contact form
 export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,12 +29,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Invalid email format' });
     }
 
-    // Service validation
-    const validServices = ['property-management', 'real-estate-sales', 'tenant-services', 'investment-advisory', 'other', ''];
-    if (service && !validServices.includes(service)) {
-      return res.status(400).json({ error: 'Invalid service type' });
-    }
-
     // Create contact inquiry object
     const inquiry = {
       name: name.trim(),
@@ -49,14 +42,7 @@ export default async function handler(req, res) {
 
     // Log the inquiry (in production, you'd save to database)
     console.log('Contact Form Submission:', inquiry);
-
-    // Send email notification (optional - requires SMTP setup)
-    try {
-      await sendEmailNotification(inquiry);
-    } catch (emailError) {
-      console.warn('Email notification failed:', emailError.message);
-      // Continue without failing the request
-    }
+    console.log('Email would be sent to: info@dellpropertymanagement.com');
 
     return res.status(200).json({
       success: true,
@@ -70,14 +56,4 @@ export default async function handler(req, res) {
       error: 'An error occurred while processing your inquiry. Please try again.' 
     });
   }
-}
-
-async function sendEmailNotification(inquiry) {
-  // Email functionality can be added here with services like:
-  // - SendGrid
-  // - Nodemailer with SMTP
-  // - Resend
-  // For now, we'll just log the inquiry
-  console.log('Email would be sent to: info@dellpropertymanagement.com');
-  console.log('Inquiry details:', inquiry);
 }
